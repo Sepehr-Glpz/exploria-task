@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AssemblyName>SGSX.Exploria.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>$(AssemblyName)</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Label="Global Usings">
+		<Using Include="System; System.Text;" />
+		<Using Include="System.Collections.Generic; System.Linq;" />
+		<Using Include="System.Threading; System.Threading.Tasks;" />
+	</ItemGroup>
+
+</Project>

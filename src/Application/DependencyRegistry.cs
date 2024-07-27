@@ -16,15 +16,14 @@ public static class DependencyRegistry
         services
             .AddHttpClient();
 
-        services.AddScoped<WeatherService>();
-        services.AddScoped<WeatherProviderService>();
         services.AddDbContextFactory<WeatherDatabaseContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("Default"));
         });
 
+        services.AddScoped<WeatherService>();
+        services.AddScoped<WeatherProviderService>();
         services.AddSingleton<NewReportNotifier>();
-
         services.Configure<WeatherApiConfig>(configuration.GetSection(nameof(WeatherApiConfig)));
 
         services.AddHostedService<DbMigratorHostedService>();

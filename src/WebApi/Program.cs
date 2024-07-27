@@ -11,6 +11,8 @@ public class Program
     {
         try
         {
+            #region Building the app
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
@@ -37,6 +39,10 @@ public class Program
             //    };
             //});
 
+            #endregion
+
+            #region Configure pipeline
+
             using var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -54,6 +60,8 @@ public class Program
             //app.UseRequestTimeouts();
 
             app.MapControllers();
+
+            #endregion
 
             await app.RunAsync();
         }

@@ -11,9 +11,15 @@ public class WeatherProviderService(
     IHttpClientFactory httpClientFactory,
     ILogger<WeatherProviderService> logger)
 {
+    #region Deps
+
     private readonly IOptionsSnapshot<WeatherApiConfig> _config = config;
     private readonly IHttpClientFactory _clientFactory = httpClientFactory;
     private readonly ILogger<WeatherProviderService> _logger = logger;
+
+    #endregion 
+
+    #region Methods
 
     public async Task<Result<byte[]>> GetWeatherAsync(IReadOnlyDictionary<string, string> query, CancellationToken ct)
     {
@@ -41,6 +47,10 @@ public class WeatherProviderService(
         }
     }
 
+    #endregion
+
+    #region Private Util
+
     private Uri CreateRequestUri(IReadOnlyDictionary<string, string> query)
     {
         var builder = new UriBuilder(_config.Value.WeatherApBaseUrl)
@@ -56,4 +66,6 @@ public class WeatherProviderService(
         string.Join('&',
             query.Select(s => $"{WebUtility.UrlEncode(s.Key)}={WebUtility.UrlEncode(s.Value)}")
         );
+
+    #endregion
 }

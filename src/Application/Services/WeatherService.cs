@@ -11,10 +11,16 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
     NewReportNotifier reportNotifier,
     ILogger<WeatherService> logger)
 {
+    #region Deps
+
     private readonly WeatherDatabaseContext _dbContext = databaseContext;
     private readonly ILogger<WeatherService> _logger = logger;
     private readonly WeatherProviderService _weatherProviderService = weatherProvider;
     private readonly NewReportNotifier _newReportNotifier = reportNotifier;
+
+    #endregion
+
+    #region Methods
 
     public async Task<Result<WeatherReport>> GetWeatherReportAsync(WeatherReportQuery query, CancellationToken ct)
     {
@@ -62,6 +68,10 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
         }
     }
 
+    #endregion
+
+    #region Private Util
+
     private async Task<Result<byte[]>> GetReportFromProvider(WeatherReportQuery query, CancellationToken ct)
     {
         try
@@ -103,4 +113,6 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
 
         return cancelSrc;
     }
+
+    #endregion
 }

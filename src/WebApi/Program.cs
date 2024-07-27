@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using SGSX.Exploria.Application;
 
 namespace WebApi;
 public class Program
@@ -9,7 +13,47 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddControllers();
+
+            builder.Services.AddApplicationLayer(builder.Configuration);
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("weather", new OpenApiInfo()
+                {
+                    Title = "Exploria Task",
+                    Description = "simple weather wrapper api for exploria",
+                    Version = "1.0",
+                });
+            });
+
+            // tried this, it does not work right
+
+            //builder.Services.AddRequestTimeouts(c =>
+            //{
+            //    c.DefaultPolicy = new Microsoft.AspNetCore.Http.Timeouts.RequestTimeoutPolicy()
+            //    {
+            //        Timeout = TimeSpan.FromSeconds(5),
+            //    };
+            //});
+
             using var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(ui =>
+                {
+                    ui.SwaggerEndpoint("/swagger/weather/swagger.json", "weather");
+                });
+            }
+
+            app.UseRouting();
+
+            // dont use this
+            //app.UseRequestTimeouts();
+
+            app.MapControllers();
 
             await app.RunAsync();
         }

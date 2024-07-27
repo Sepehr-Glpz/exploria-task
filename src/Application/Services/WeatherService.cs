@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using SGSX.Exploria.Application.Data;
 using SGSX.Exploria.Application.Infra;
 using SGSX.Exploria.Application.Models;
-using System.IO;
 
 namespace SGSX.Exploria.Application.Services;
 public class WeatherService(WeatherDatabaseContext databaseContext,
@@ -22,6 +21,9 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
         try
         {
             var reportId = query.ToUniqueId();
+
+            if (reportId == Guid.Empty)
+                return Result.Fail("invalid query!");
 
             var dbQueryCancel = GetDependentCancelSrc(ct); // a token thats cancelled if main request is cancelled
 
@@ -49,7 +51,7 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
             return prevReportTask.Result switch
             {
                 { IsSuccess: true } => prevReportTask.Result,
-                _ => Result.Ok<WeatherReport>(null!),
+                _ => Result.Fail("failed to create report")
             };
         }
         catch (Exception ex)

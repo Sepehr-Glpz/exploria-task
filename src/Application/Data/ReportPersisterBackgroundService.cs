@@ -6,11 +6,11 @@ using SGSX.Exploria.Application.Infra;
 namespace SGSX.Exploria.Application.Data;
 internal class ReportPersisterBackgroundService(
     NewReportNotifier newReportNotifier,
-    WeatherDatabaseContext weatherDatabase,
+    IDbContextFactory<WeatherDatabaseContext> ctxFactory,
     ILogger<ReportPersisterBackgroundService> logger) : BackgroundService
 {
     private readonly NewReportNotifier _reportNotifier = newReportNotifier;
-    private readonly WeatherDatabaseContext _dbCtx = weatherDatabase;
+    private readonly IDbContextFactory<WeatherDatabaseContext> _ctxFactory = ctxFactory;
     private readonly ILogger<ReportPersisterBackgroundService> _logger = logger;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,7 +19,9 @@ internal class ReportPersisterBackgroundService(
         {
             try
             {
-                await _dbCtx.Reports
+                using var ctx = await _ctxFactory.CreateDbContextAsync(stoppingToken);
+
+                await ctx.Reports
                     .Upsert(report)
                     .On(c => c.Id)
                     .UpdateIf((prev, current) => current.ReportDate > prev.ReportDate)

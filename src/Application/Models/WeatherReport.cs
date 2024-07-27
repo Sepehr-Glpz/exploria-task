@@ -1,5 +1,4 @@
-﻿using System.IO;
-
+﻿
 namespace SGSX.Exploria.Application.Models;
 public class WeatherReport
 {

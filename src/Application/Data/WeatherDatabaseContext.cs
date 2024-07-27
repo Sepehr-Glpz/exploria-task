@@ -13,6 +13,7 @@ public sealed class WeatherDatabaseContext(DbContextOptions<WeatherDatabaseConte
             .HasKey(k => k.Id);
         builder.Entity<WeatherReport>()
             .Property(c => c.Id)
+            .ValueGeneratedNever()
             .IsRequired()
             .HasColumnType("UNIQUEIDENTIFIER");
         builder.Entity<WeatherReport>()

@@ -8,6 +8,14 @@
 		<RootNamespace>$(AssemblyName)</RootNamespace>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Application\Application.csproj" />
+	</ItemGroup>
+
 	<ItemGroup Label="Global Usings">
 		<Using Include="System; System.Text;" />
 		<Using Include="System.Collections.Generic; System.Linq;" />

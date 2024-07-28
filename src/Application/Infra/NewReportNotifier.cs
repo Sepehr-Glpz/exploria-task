@@ -8,5 +8,5 @@ public class NewReportNotifier
 
     public async ValueTask Notify(WeatherReport report) => await _channel.Writer.WriteAsync(report);
 
-    public IAsyncEnumerable<WeatherReport> ListenAsync() => _channel.Reader.ReadAllAsync();
+    public IAsyncEnumerable<WeatherReport> ListenAsync(CancellationToken ct) => _channel.Reader.ReadAllAsync(ct);
 }

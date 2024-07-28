@@ -48,6 +48,8 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
 
                 await _newReportNotifier.Notify(result);
 
+                dbQueryCancel.Cancel();
+
                 return Result.Ok(result);
             }
 

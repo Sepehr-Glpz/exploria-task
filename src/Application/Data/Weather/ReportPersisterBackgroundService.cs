@@ -22,7 +22,7 @@ internal class ReportPersisterBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await foreach (var report in _reportNotifier.ListenAsync())
+        await foreach (var report in _reportNotifier.ListenAsync(stoppingToken))
         {
             try
             {

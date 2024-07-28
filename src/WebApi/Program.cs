@@ -16,6 +16,9 @@ public class Program
 
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Host
+                .ConfigureHostOptions(host => host.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore);
+
             builder.Services
                 .AddControllers();
 

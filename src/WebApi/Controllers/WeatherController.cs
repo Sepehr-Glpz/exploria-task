@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SGSX.Exploria.Application.Models.Weather;
 using SGSX.Exploria.Application.Services;
 using System.Net.Mime;
 
@@ -19,7 +20,7 @@ public class WeatherController(WeatherService weatherService) : ControllerBase
     {
         var cancellationTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(4));
 
-        var response = await _weatherService.GetWeatherReportAsync(new Application.Models.WeatherReportQuery()
+        var response = await _weatherService.GetWeatherReportAsync(new WeatherReportQuery()
         {
             Params = query,
         }, cancellationTimeout.Token);

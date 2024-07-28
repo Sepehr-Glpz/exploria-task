@@ -1,5 +1,4 @@
-﻿
-using SGSX.Exploria.Application.Models;
+﻿using SGSX.Exploria.Application.Models.Weather;
 using System.Threading.Channels;
 
 namespace SGSX.Exploria.Application.Infra;

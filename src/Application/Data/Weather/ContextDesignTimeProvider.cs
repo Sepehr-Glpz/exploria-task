@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace SGSX.Exploria.Application.Data;
+namespace SGSX.Exploria.Application.Data.Weather;
 internal class ContextDesignTimeProvider : IDesignTimeDbContextFactory<WeatherDatabaseContext>
 {
     private const string LOCAL_DB_CONN = "Server=127.0.0.1;User Id=application;Password=123456;Database=WeatherTask;Encrypt=False";

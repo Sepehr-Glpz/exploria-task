@@ -3,8 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Options;
-using SGSX.Exploria.Application.Data;
+using SGSX.Exploria.Application.Data.Weather;
 using SGSX.Exploria.Application.Infra;
+using SGSX.Exploria.Application.Models.Configuration;
 using SGSX.Exploria.Application.Services;
 using System.Net.Http;
 
@@ -14,17 +15,25 @@ public static class DependencyRegistry
     public static void AddApplicationLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddHttpClient();
+            .AddHttpClient<HttpClient>()
+            .AddStandardResilienceHandler(res =>
+            {
+                res.CircuitBreaker.MinimumThroughput = 500;
+                res.Retry.ShouldHandle = (_) => ValueTask.FromResult(false);
+            });
 
-        services.AddDbContextFactory<WeatherDatabaseContext>(options =>
+        services.AddDbContext<WeatherDatabaseContext>((sp, options) =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("Default"));
+            var config = sp.CreateScope().ServiceProvider.GetRequiredService<IOptionsSnapshot<DatabaseConnectionConfig>>();
+            options.UseSqlServer(config.Value.Default);
         });
 
         services.AddScoped<WeatherService>();
         services.AddScoped<WeatherProviderService>();
         services.AddSingleton<NewReportNotifier>();
+        services.AddScoped<ConfigurationService>();
         services.Configure<WeatherApiConfig>(configuration.GetSection(nameof(WeatherApiConfig)));
+        services.Configure<DatabaseConnectionConfig>(configuration.GetSection("ConnectionStrings"));
 
         services.AddHostedService<DbMigratorHostedService>();
         services.AddHostedService<ReportPersisterBackgroundService>();

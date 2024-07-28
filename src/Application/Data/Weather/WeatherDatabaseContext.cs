@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SGSX.Exploria.Application.Models;
+using SGSX.Exploria.Application.Models.Weather;
 
-namespace SGSX.Exploria.Application.Data;
+namespace SGSX.Exploria.Application.Data.Weather;
 public sealed class WeatherDatabaseContext(DbContextOptions<WeatherDatabaseContext> options) : DbContext(options)
 {
     public DbSet<WeatherReport> Reports { get; set; }

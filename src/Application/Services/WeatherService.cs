@@ -1,9 +1,9 @@
 ﻿using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SGSX.Exploria.Application.Data;
+using SGSX.Exploria.Application.Data.Weather;
 using SGSX.Exploria.Application.Infra;
-using SGSX.Exploria.Application.Models;
+using SGSX.Exploria.Application.Models.Weather;
 
 namespace SGSX.Exploria.Application.Services;
 public class WeatherService(WeatherDatabaseContext databaseContext,
@@ -13,8 +13,8 @@ public class WeatherService(WeatherDatabaseContext databaseContext,
 {
     #region Deps
 
-    private readonly WeatherDatabaseContext _dbContext = databaseContext;
     private readonly ILogger<WeatherService> _logger = logger;
+    private readonly WeatherDatabaseContext _dbContext = databaseContext;
     private readonly WeatherProviderService _weatherProviderService = weatherProvider;
     private readonly NewReportNotifier _newReportNotifier = reportNotifier;
 

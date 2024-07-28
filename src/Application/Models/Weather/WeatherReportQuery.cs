@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace SGSX.Exploria.Application.Models;
+namespace SGSX.Exploria.Application.Models.Weather;
 public class WeatherReportQuery
 {
     public required IReadOnlyDictionary<string, string> Params { get; init; }

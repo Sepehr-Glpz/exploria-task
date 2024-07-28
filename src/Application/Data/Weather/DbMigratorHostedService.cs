@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace SGSX.Exploria.Application.Data;
+namespace SGSX.Exploria.Application.Data.Weather;
 internal class DbMigratorHostedService(IServiceProvider serviceProvider) : IHostedService
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;

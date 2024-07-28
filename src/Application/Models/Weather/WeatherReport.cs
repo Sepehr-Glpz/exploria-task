@@ -1,5 +1,4 @@
-﻿
-namespace SGSX.Exploria.Application.Models;
+﻿namespace SGSX.Exploria.Application.Models.Weather;
 public class WeatherReport
 {
     public required Guid Id { get; init; }

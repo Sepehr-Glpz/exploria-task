@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SGSX.Exploria.Application.Models.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -53,7 +54,7 @@ public class WeatherProviderService(
 
     private Uri CreateRequestUri(IReadOnlyDictionary<string, string> query)
     {
-        var builder = new UriBuilder(_config.Value.WeatherApBaseUrl)
+        var builder = new UriBuilder(_config.Value.WeatherApiBaseUrl)
         {
             Path = _config.Value.WeatherApiPath,
             Query = CreateQueryString(query)

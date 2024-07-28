@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,7 +16,10 @@ public class Program
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services
+                .AddControllers();
+
+            builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
             builder.Services.AddApplicationLayer(builder.Configuration);
 
@@ -65,7 +69,7 @@ public class Program
 
             await app.RunAsync();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine($"Application stopped. reason: {ex.Message}");
         }
